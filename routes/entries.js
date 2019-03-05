@@ -47,4 +47,19 @@ router.get('/edit', async (req, res, next) => {
     });
 });
 
+// Ask to delete diary entry
+router.get('/destroy', async (req, res, next) => {
+    var diaryEntry = await entries.read(req.query.date);
+    res.render('entrydestroy', {
+        title: diaryEntry ? diaryEntry.title : "",
+        date: req.query.date,
+        entry: diaryEntry
+    });
+});
+
+// Really destroy note (destroy)
+router.post('/destroy/confirm', async (req, res, next) => {
+    await entries.destroy(req.body.date);
+    res.redirect('/');
+});
 module.exports = router;
