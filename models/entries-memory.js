@@ -2,6 +2,9 @@ const Entry = require('./Entry');
 
 var diaryEntries = [];
 
+let newEntry = new Entry(new Date(), 'title', 'content');
+diaryEntries[newEntry.date] = newEntry;
+
 exports.update = exports.create = async function (date, title, content) {
     diaryEntries[date] = new Entry(date, title, content);
     return diaryEntries[date];
@@ -21,7 +24,7 @@ exports.destroy = async function (date) {
     }
 }
 
-exports.keylist = async function () {
+exports.datelist = async function () {
     return Object.keys(diaryEntries);
 }
 exports.count = async function () {

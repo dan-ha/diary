@@ -1,2 +1,7 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+{{#each diaryEntries}}
+<ul>
+    <li>{{ date }}:
+        <a href="/view?date={{ date }}">{{ title }}</a>
+    </li>
+</ul>
+{{/each}}
