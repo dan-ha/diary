@@ -1,0 +1,20 @@
+<form method='POST' action='/entry/save'>
+    <input type='hidden' name='docreate' value='<%= docreate ? "create" : "update" %>'>
+    <p>Date:
+        {{#if docreate }}
+        <input type='text' name='date' value='' />
+        {{else}}
+        {{#if entry }}{{date}}{{/if}}
+        <input type='hidden' name='date' value='{{#if entry }}{{date}}{{/if}}' />
+        {{/if}}
+    </p>
+    <p>Title:
+        <input type='text' name='title' value='{{#if entry }}{{entry.title}}{{/if}}' />
+    </p>
+    <br />
+    <textarea rows=5 cols=40 name='body'>
+        {{#if entry }}{{entry.body}}{{/if}} 
+    </textarea>
+    <br />
+    <input type='submit' value='Submit' />
+</form>
