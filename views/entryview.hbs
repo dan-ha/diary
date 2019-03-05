@@ -1,8 +1,8 @@
 {{#if entry}}<h3>{{ entry.title }}</h3>{{/if}}
-{{#if entry}}<p>{{ entry.body }}</p>{{/if}}
+{{#if entry}}<p>{{ entry.content }}</p>{{/if}}
 <p>Date: {{ date }}</p>
 {{#if date }}
     <hr/>
-    <p><a href="/entry/destroy?key={{date}}">Delete</a>
-     | <a href="/entry/edit?key={{date}}">Edit</a></p>
+    <p><a href="/entry/destroy?date={{date}}">Delete</a>
+     | <a href="/entry/edit?date={{date}}">Edit</a></p>
 {{/if}}

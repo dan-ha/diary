@@ -36,4 +36,15 @@ router.get('/view', async (req, res, next) => {
     });
 });
 
+// Edit Diary Entry
+router.get('/edit', async (req, res, next) => {
+    var diaryEntry = await entries.read(req.query.date);
+    res.render('entryedit', {
+        title: diaryEntry ? ("Edit " + diaryEntry.title) : "Add a Note",
+        docreate: false,
+        date: req.query.date,
+        entry: diaryEntry
+    });
+});
+
 module.exports = router;
