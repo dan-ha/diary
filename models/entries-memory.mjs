@@ -36,3 +36,6 @@ export async function datelist (){
 export async function count() {
     return diaryEntries.length;
 }
+export async function close() {
+    
+}
