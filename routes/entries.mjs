@@ -1,6 +1,6 @@
 import util from 'util';
 import express from 'express';
-import * as entries from '../models/entries-memory';
+import * as entries from '../models/entries';
 
 export const router = express.Router();
 

@@ -1,5 +1,9 @@
 <form method='POST' action='/entry/save'>
-    <input type='hidden' name='docreate' value='<%= docreate ? "create" : "update" %>'>
+    {{#if docreate}}
+    <input type='hidden' name='docreate' value="create">
+    {{else}}
+    <input type='hidden' name='docreate' value="update">
+    {{/if}}
     <p>Date:
         {{#if docreate }}
         <input type='text' name='date' value='' />

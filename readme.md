@@ -1,5 +1,5 @@
 npm install  
-DEBUG=diary:* npm start
+npm run start-mongo
 
 Environment variables:  
 REQUEST_LOG_FORMAT=common  

@@ -7,6 +7,7 @@ export const router = express.Router();
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   let datelist = await entries.datelist();
+  console.log(datelist);
   let entryPromises = datelist.map(date => {
     return entries.read(date);
   })

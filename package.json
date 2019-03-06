@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=diary:* ENTRIES_MODEL=memory node --experimental-modules ./bin/www.mjs"
+    "start-memory": "DEBUG=diary:* ENTRIES_MODEL=memory node --experimental-modules ./bin/www.mjs",
+    "start-mongo": "DEBUG=diary:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=diary ENTRIES_MODEL=mongodb node --experimental-modules ./bin/www.mjs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
