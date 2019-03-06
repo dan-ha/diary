@@ -2,7 +2,7 @@ const _entry_date = Symbol('date');
 const _entry_title = Symbol('title');
 const _entry_content = Symbol('content');
 
-module.exports = class Entry {
+export default class Entry {
     constructor(date, title, content) {
         this[_entry_date] = date;
         this[_entry_title] = title;

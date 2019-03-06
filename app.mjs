@@ -1,21 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+import fs from 'fs-extra';
+import express from 'express';
+import hbs from 'hbs';
+import path from 'path';
+import util from 'util';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import DBG from 'debug';
+const debug = DBG('diary:debug');
+const error = DBG('diary:error');
 
-const fs = require('fs-extra');
-const util = require('util');
-const hbs = require('hbs');
+import { router as indexRouter} from './routes/index';
+import { router as entryRouter} from './routes/entries';
+ 
+// Workaround for lack of __dirname in ES6 modules
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-// Logging dependencies
-const rfs = require('rotating-file-stream');
-const error = require('debug')('diary:error');
-
-var indexRouter = require('./routes/index');
-var entryRouter = require('./routes/entries');
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,6 +23,7 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // Setup logging
+import rfs from 'rotating-file-stream';
 var logStream;
 // Log to a file if requested (with rotaing-file-stream)
 if (process.env.REQUEST_LOG_FILE) {
@@ -98,4 +99,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

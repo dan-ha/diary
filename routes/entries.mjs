@@ -1,7 +1,8 @@
-const util = require('util');
-const express = require('express');
-const router = express.Router();
-const entries = require('../models/entries-memory');
+import util from 'util';
+import express from 'express';
+import * as entries from '../models/entries-memory';
+
+export const router = express.Router();
 
 // Add new Diary Entry
 router.get('/add', (req, res, next) => {
@@ -62,4 +63,3 @@ router.post('/destroy/confirm', async (req, res, next) => {
     await entries.destroy(req.body.date);
     res.redirect('/');
 });
-module.exports = router;

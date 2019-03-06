@@ -3,10 +3,11 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
-var debug = require('debug')('diary:server');
-var http = require('http');
+import app from '../app.mjs';
+import DBG from 'debug';
+const debug = DBG('diary:server-debug');
+const error = DBG('diary:server-error');
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
