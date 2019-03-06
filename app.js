@@ -2,13 +2,13 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 const fs = require('fs-extra');
 const util = require('util');
 const hbs = require('hbs');
 
 // Logging dependencies
-var logger = require('morgan');
 const rfs = require('rotating-file-stream');
 const error = require('debug')('diary:error');
 
@@ -21,14 +21,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/entry', entryRouter);
 
 // Setup logging
 var logStream;
@@ -48,14 +40,25 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
   stream: logStream ? logStream : process.stdout
 }));
 
-// Error handling
-process.on('uncaughtException', function(err) {
-  error("I've crashed!!! - " + (err.stack || err));
-})
 
-process.on('unhandledRejection', (reason, p) => {
-  error(`Unhandled Rejection at: ${util.inspect(p)} reason: ${reason}`);
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/entry', entryRouter);
+
+
+
+// Error handling
+// process.on('uncaughtException', function(err) {
+//   error("I've crashed!!! - " + (err.stack || err));
+// })
+
+// process.on('unhandledRejection', (reason, p) => {
+//   error(`Unhandled Rejection at: ${util.inspect(p)} reason: ${reason}`);
+// })
 
 if(app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
