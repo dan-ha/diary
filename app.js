@@ -9,6 +9,7 @@ const hbs = require('hbs');
 // Logging dependencies
 var logger = require('morgan');
 const rfs = require('rotating-file-stream');
+const error = require('debug')('diary:error');
 
 var indexRouter = require('./routes/index');
 var entryRouter = require('./routes/entries');
@@ -46,6 +47,32 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
   stream: logStream ? logStream : process.stdout
 }));
 
+// Error handling
+process.on('uncaughtException', function(err) {
+  error("I've crashed!!! - " + (err.stack || err));
+})
+
+if(app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    // util.log(err.message);
+    res.status(err.status || 500);
+    error((err.status || 500) + ' ' + error.message);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+app.use(function(err, req, res, next) {
+  // util.log(err.message);
+  res.status(err.status || 500);
+  error((err.status || 500) + ' ' + error.message);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
