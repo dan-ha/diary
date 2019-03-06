@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 const fs = require('fs-extra');
+const util = require('util');
 const hbs = require('hbs');
 
 // Logging dependencies
@@ -50,6 +51,10 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
 // Error handling
 process.on('uncaughtException', function(err) {
   error("I've crashed!!! - " + (err.stack || err));
+})
+
+process.on('unhandledRejection', (reason, p) => {
+  error(`Unhandled Rejection at: ${util.inspect(p)} reason: ${reason}`);
 })
 
 if(app.get('env') === 'development') {
