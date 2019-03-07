@@ -1,7 +1,7 @@
-{{#each diaryEntries}}
-<ul>
-    <li>{{ date }}:
-        <a href="entry/view?date={{ date }}">{{ title }}</a>
-    </li>
-</ul>
-{{/each}}
+<div class="row flex-center child-borders">
+    {{#each diaryEntries}}
+    <div class="sm-8 col">
+        {{ date }}: <a href="entry/view?date={{ date }}">{{ title }}</a>
+    </div>
+    {{/each}}
+</div>
