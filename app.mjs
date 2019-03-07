@@ -45,7 +45,10 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/assets/vendor/papercss', express.static(
+  path.join(__dirname, 'node_modules', 'papercss', 'dist')));
 
 app.use('/', indexRouter);
 app.use('/entry', entryRouter);
