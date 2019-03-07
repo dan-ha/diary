@@ -1,10 +1,21 @@
 <header>
     <h1>{{title}}</h1>
-    <div class='navbar'>
-        <p>
-            <a href='/'>Home</a>
-            |
-            <a href='/entry/add'>My Day</a>
-        </p>
-    </div>
+    <nav class="border fixed">
+        <div class="nav-brand">
+            <h4><a href="/">Online Diary</a></h4>
+        </div>
+        <div class="collapsible">
+            <input id="collapsible2" type="checkbox" name="collapsible2">
+            <button>
+                <label for="collapsible2">
+                    <div class="bar1"></div>
+                </label>
+            </button>
+            <div class="collapsible-body">
+                <ul class="inline">
+                    <li><a href="/entry/add">My Day</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
