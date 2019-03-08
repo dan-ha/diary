@@ -11,16 +11,18 @@ const error = DBG('diary:error');
 
 import { router as indexRouter} from './routes/index';
 import { router as entryRouter} from './routes/entries';
+import { router as userRouter, initPassport } from './routes/users';
+
+import session from 'express-session';
+// files store manages session in files-we can restart server without loosing sessionse
+import sessionFileStore from 'session-file-store';
+const FileStore = sessionFileStore(session); 
+export const sessionCookieName = 'notescookie.sid';
  
 // Workaround for lack of __dirname in ES6 modules
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 // Setup logging
 import rfs from 'rotating-file-stream';
@@ -41,6 +43,20 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
   stream: logStream ? logStream : process.stdout
 }));
 
+app.use(session({
+  store: new FileStore({ path: "sessions" }),
+  secret: 'keyboard mouse',
+  resave: true,
+  saveUninitialized: true,
+  name: sessionCookieName
+}));
+initPassport(app);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +67,7 @@ app.use('/assets/vendor/papercss', express.static(
   path.join(__dirname, 'node_modules', 'papercss', 'dist')));
 
 app.use('/', indexRouter);
+app.use('/users', userRouter);
 app.use('/entry', entryRouter);
 
 
