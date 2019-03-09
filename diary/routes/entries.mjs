@@ -1,21 +1,23 @@
 import util from 'util';
 import express from 'express';
 import * as entries from '../models/entries';
+import { ensureAuthenticated } from './users';
 
 export const router = express.Router();
 
 // Add new Diary Entry
-router.get('/add', (req, res, next) => {
+router.get('/add', ensureAuthenticated, (req, res, next) => {
     res.render('entryedit', {
         title: "My day",
         docreate: true,
-        entrydate: "",
+        date: "",
+        user: req.user,
         entry: undefined
     });
 });
 
 // Save Diary Entry
-router.post('/save', async (req, res, next) => {
+router.post('/save', ensureAuthenticated,async (req, res, next) => {
     var diaryEntry;
     if (req.body.docreate === 'create') {
         diaryEntry = await entries.create(req.body.date,
@@ -28,7 +30,7 @@ router.post('/save', async (req, res, next) => {
 });
 
 // Read Diary Entry
-router.get('/view', async (req, res, next) => {
+router.get('/view', ensureAuthenticated, async (req, res, next) => {
     var diaryEntry = await entries.read(req.query.date);
     res.render('entryview', {
         title: diaryEntry ? diaryEntry.title : "",
@@ -38,18 +40,19 @@ router.get('/view', async (req, res, next) => {
 });
 
 // Edit Diary Entry
-router.get('/edit', async (req, res, next) => {
+router.get('/edit', ensureAuthenticated, async (req, res, next) => {
     var diaryEntry = await entries.read(req.query.date);
     res.render('entryedit', {
         title: diaryEntry ? ("Edit " + diaryEntry.title) : "Add a Note",
         docreate: false,
         date: req.query.date,
+        user: req.user ? req.user : undefined,
         entry: diaryEntry
     });
 });
 
 // Ask to delete diary entry
-router.get('/destroy', async (req, res, next) => {
+router.get('/destroy', ensureAuthenticated, async (req, res, next) => {
     var diaryEntry = await entries.read(req.query.date);
     res.render('entrydestroy', {
         title: diaryEntry ? diaryEntry.title : "",
@@ -59,7 +62,7 @@ router.get('/destroy', async (req, res, next) => {
 });
 
 // Really destroy note (destroy)
-router.post('/destroy/confirm', async (req, res, next) => {
+router.post('/destroy/confirm', ensureAuthenticated, async (req, res, next) => {
     await entries.destroy(req.body.date);
     res.redirect('/');
 });

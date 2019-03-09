@@ -63,5 +63,7 @@ typings/
 # mongoDB
 data/
 
-# sqlite
-.sqlite3
+
+
+#express session file
+diary/sessions

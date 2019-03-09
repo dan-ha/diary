@@ -3,4 +3,4 @@ username:
 password:
 params:
     dialect: sqlite
-    storage: users-sequelize.sqlite3
+    storage: data/users-sequelize.sqlite3

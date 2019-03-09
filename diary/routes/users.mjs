@@ -25,7 +25,20 @@ export function ensureAuthenticated(req, res, next) {
       next();
     }
     else {
-      res.redirect('/users/login');
+      res.redirect('/user/login');
+    }
+  } catch (e) {
+    next(e);
+  }
+}
+
+// TO avoid logged in user login again/register
+function redirectHomeWhenAuthenticated(req, res, next) {
+  try {
+    if(req.user) {
+      res.redirect('/');
+    } else {
+      next();
     }
   } catch (e) {
     next(e);
@@ -33,7 +46,7 @@ export function ensureAuthenticated(req, res, next) {
 }
 
 // Login (get)
-router.get('/login', function (req, res, next) {
+router.get('/login', redirectHomeWhenAuthenticated,  function (req, res, next) {
   try {
     res.render('login', {
       title: "Login to Diary",
@@ -50,6 +63,41 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: 'login' // FAILURE: Go to /user/login
 })
 );
+
+// Register new User (get)
+router.get('/register', (req, res, next) => {
+  try {
+    res.render('register', {
+      title: "register",
+      user: req.user
+    })
+  } catch(e) {
+    next(e);
+  }
+});
+
+// Register new User (post)
+router.post('/register', redirectHomeWhenAuthenticated, (req, res, next) => {
+  try {
+    // if username exists return error
+    var newAccount = usersModel.create(
+        req.body.username,
+        req.body.password,
+        "local",
+        req.body.name,  // family name
+        req.body.name,  // given name
+        req.body.name,  // middle name
+        req.body.email,
+        undefined
+    );
+    if(newAccount) {
+      res.redirect("login");
+    }
+    // return error that it failed to create account
+  } catch(e) {
+    next(e);
+  }
+});
 
 router.get('/logout', function(req, res, next) {
   try{

@@ -8,11 +8,18 @@
             <button>
                 <label for="collapsible2">
                     <div class="bar1"></div>
+                    <div class="bar2"></div>
                 </label>
             </button>
             <div class="collapsible-body">
                 <ul class="inline">
+                    {{#if user}}
                     <li><a href="/entry/add">My Day</a></li>
+                    <li><a href="/user/logout">LogOut</a></li>
+                    {{else}}
+                    <li><a href="/user/login">LogIn</a></li>
+                    <li><a href="/user/register">Register</a></li>
+                    {{/if}}
                 </ul>
             </div>
         </div>

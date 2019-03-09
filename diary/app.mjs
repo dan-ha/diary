@@ -67,7 +67,7 @@ app.use('/assets/vendor/papercss', express.static(
   path.join(__dirname, 'node_modules', 'papercss', 'dist')));
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/entry', entryRouter);
 
 
