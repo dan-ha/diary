@@ -14,6 +14,6 @@ router.get('/', ensureAuthenticated, async (req, res, next) => {
   let diaryEntries = await Promise.all(entryPromises);
   res.render('index', { 
     title: 'Online Diary',
-    user: req.user,
+    user: req.user ? req.user : undefined,
     diaryEntries: diaryEntries });
 });

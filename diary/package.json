@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
-    "start-memory": "DEBUG=diary:* ENTRIES_MODEL=memory node --experimental-modules ./bin/www.mjs",
-    "start-mongo": "DEBUG=diary:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=diary ENTRIES_MODEL=mongodb node --experimental-modules ./bin/www.mjs"
+    "start-memory": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
+    "start-mongo": "DEBUG=diary:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=diary ENTRIES_MODEL=mongodb USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

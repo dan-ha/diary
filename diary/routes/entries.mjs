@@ -35,7 +35,8 @@ router.get('/view', ensureAuthenticated, async (req, res, next) => {
     res.render('entryview', {
         title: diaryEntry ? diaryEntry.title : "",
         date: req.query.date,
-        entry: diaryEntry
+        entry: diaryEntry,
+        user: req.user
     });
 });
 
@@ -46,8 +47,8 @@ router.get('/edit', ensureAuthenticated, async (req, res, next) => {
         title: diaryEntry ? ("Edit " + diaryEntry.title) : "Add a Note",
         docreate: false,
         date: req.query.date,
-        user: req.user ? req.user : undefined,
-        entry: diaryEntry
+        entry: diaryEntry,
+        user: req.user,
     });
 });
 
@@ -57,7 +58,8 @@ router.get('/destroy', ensureAuthenticated, async (req, res, next) => {
     res.render('entrydestroy', {
         title: diaryEntry ? diaryEntry.title : "",
         date: req.query.date,
-        entry: diaryEntry
+        entry: diaryEntry,
+        user: req.user
     });
 });
 

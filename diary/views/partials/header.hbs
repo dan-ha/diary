@@ -1,5 +1,5 @@
 <header>
-    <nav class="border fixed">
+    <nav class="border fixed split-nav">
         <div class="nav-brand">
             <h4><a href="/">Online Diary</a></h4>
         </div>
@@ -15,6 +15,7 @@
                 <ul class="inline">
                     {{#if user}}
                     <li><a href="/entry/add">My Day</a></li>
+                    <li><a href="#">{{ user.username }}</a></li>
                     <li><a href="/user/logout">LogOut</a></li>
                     {{else}}
                     <li><a href="/user/login">LogIn</a></li>
