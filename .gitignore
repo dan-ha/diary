@@ -63,7 +63,8 @@ typings/
 # mongoDB
 data/
 
-
+# mysql
+userauth-data/
 
 #express session file
 diary/sessions
