@@ -43,8 +43,12 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
   stream: logStream ? logStream : process.stdout
 }));
 
+const sessionStore = new FileStore({
+  path: process.env.DIARY_SESSION_DIR ? process.env.DIARY_SESSION_DIR : "sessions"
+});
+
 app.use(session({
-  store: new FileStore({ path: "sessions" }),
+  store: sessionStore,
   secret: 'keyboard mouse',
   resave: true,
   saveUninitialized: true,

@@ -65,6 +65,7 @@ data/
 
 # mysql
 userauth-data/
+diary-data/
 
 #express session file
 diary/sessions
