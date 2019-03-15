@@ -1,0 +1,18 @@
+{
+  "name": "test-diary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-entries-memory": "ENTRIES_MODEL=memory mocha test-model",
+    "test-entries-sequelize-sqlite": "ENTRIES_MODEL=sequelize SEQUELIZE_CONNECT=sequelize-sqlite.yaml mocha test-model"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "@std/esm": "*",
+    "mocha": "^6.0.2"
+  }
+}

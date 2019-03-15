@@ -4,7 +4,6 @@ import jsyaml from 'js-yaml';
 import Entry from './Entry';
 import Sequelize from 'sequelize';
 import DBG from 'debug';
-import { read } from 'fs';
 const debug = DBG('diary:diary-sequelize');
 const error = DBG('diary:error-sequelize');
 
@@ -20,7 +19,7 @@ async function connectDB() {
     }
     if (SQEntry) return SQEntry.sync();
     SQEntry = sequlz.define('Entry', {
-        date: { type: Sequelize.DATEONLY, primaryKey: true, unique: true },
+        date: { type: Sequelize.STRING, primaryKey: true, unique: true },
         title: Sequelize.STRING,
         content: Sequelize.TEXT
     });
@@ -36,39 +35,39 @@ export async function create(date, title, content) {
 
 export async function update(date, title, content) {
     const SQEntry = await connectDB();
-    const entry = await SQEntry.find({ where: { date: date } });
+    const entry = await SQEntry.findOne({ where: { date: date } });
     if (!entry) {
         throw new Error(`No diary entry found for date: ${date}`);
     } else {
-        await entry.updateAttributes({ title: title, content: content });
+        await entry.update({ title: title, content: content });
         return new Entry(date, title, content);
     }
 }
 
 export async function read(date) {
     const SQEntry = await connectDB();
-    const entry = await SQEntry.find({ where: { date: date } });
+    const entry = await SQEntry.findOne({ where: { date: date } });
     if (!entry) {
         throw new Error(`No diary entry found for date: ${date}`);
     } else {
-        return new Entry(note.date, note.title, note.content);
+        return new Entry(entry.date, entry.title, entry.content);
     }
 }
 
 export async function destroy(date) {
-    const SQEntry = connectDB();
-    const entry = await SQEntry.find({ where: { date: date } });
+    const SQEntry = await connectDB();
+    const entry = await SQEntry.findOne({ where: { date: date } });
     return entry.destroy();
 }
 
 export async function datelist() {
-    const SQEntry = connectDB();
+    const SQEntry = await connectDB();
     const entries = await SQEntry.findAll({attributes: ['date']});
     return entries.map(entry=>entry.date);
 }
 
 export async function count() {
-    const SQEntry = connectDB();
+    const SQEntry = await connectDB();
     const count = await SQEntry.count();
     return count;
 }

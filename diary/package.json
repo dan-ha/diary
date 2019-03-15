@@ -7,9 +7,8 @@
     "start-memory": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
     "start-mongo": "DEBUG=diary:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=diary ENTRIES_MODEL=mongodb USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
     "start-sequelize": "SEQUELIZE_CONNECT=models/sequelize-sqlite.yaml ENTRIES_MODEL=sequelize node --experimental-modules ./bin/www.mjs",
-    "docker" : "node --experimantal-modules ./app",
+    "docker": "node --experimantal-modules ./app",
     "docker-build": "docker build -t node-web-development/diary ."
-  
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -29,6 +28,7 @@
     "rotating-file-stream": "^1.4.0",
     "sequelize": "^4.43.0",
     "session-file-store": "^1.2.0",
+    "sqlite3": "^4.0.6",
     "superagent": "^4.1.0"
   }
 }

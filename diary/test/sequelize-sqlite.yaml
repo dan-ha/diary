@@ -1,0 +1,7 @@
+dbname: diarytest
+username:
+password:
+params:
+    dialect: sqlite
+    storage: diarytest-sequelize.sqlite3
+    logging: false
