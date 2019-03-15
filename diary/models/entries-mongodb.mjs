@@ -23,7 +23,6 @@ export async function create(date, title, content) {
     const { db, client } = await connectDB();
     const diaryEntry = new Entry(date, title, content);
     const collection = db.collection('entries');
-    console.log(collection);
     await collection.insertOne({ entrydate: date, title: title, content: content});
     return diaryEntry;
 }

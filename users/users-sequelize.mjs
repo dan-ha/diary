@@ -58,9 +58,11 @@ export async function update(username, password, provider, familyName, givenName
 
 
 export async function find(username) {
+    console.log('find  '+ username);
     const SQUser = await connectDB();
     const user = await SQUser.find({ where: { username: username } });
     const res = user ? sanitizedUser(user) : undefined;
+    console.log(util.inspect(res));
     return res;
 }
 

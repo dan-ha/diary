@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-entries-memory": "ENTRIES_MODEL=memory mocha test-model",
-    "test-entries-sequelize-sqlite": "ENTRIES_MODEL=sequelize SEQUELIZE_CONNECT=sequelize-sqlite.yaml mocha test-model"
+    "test-entries-sequelize-sqlite": "ENTRIES_MODEL=sequelize SEQUELIZE_CONNECT=sequelize-sqlite.yaml mocha --timeout 4000 test-model",
+    "test-entries-sequelize-mysql": "ENTRIES_MODEL=sequelize SEQUELIZE_CONNECT=sequelize-mysql.yaml mocha test-model",
+    "test-entries-mongodb": "MONGO_URL=mongodb://db-diary-mongo-test/ MONGO_DBNAME=diary-test ENTRIES_MODEL=mongodb mocha --timeout 8000 test-model"
   },
   "author": "",
   "license": "ISC",

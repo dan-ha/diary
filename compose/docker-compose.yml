@@ -54,7 +54,6 @@ services:
   diary:
     build: ../diary
     container_name: diary
-    restart: always
     depends_on:
       - db-diary
     networks:
