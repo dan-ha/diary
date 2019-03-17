@@ -7,7 +7,8 @@
     "start": "DEBUG=users:* PORT=3333 SEQUELIZE_CONNECT=sequelize-sqlite.yaml node --experimental-modules user-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker": "node --experimental-modules ./user-server",
-    "docker-build": "docker build -t node-web-development/userauth ."
+    "docker-build": "docker build -t node-web-development/userauth .",
+    "setupuser": "PORT=3333 node users-add"
   },
   "author": "",
   "license": "ISC",

@@ -17,4 +17,7 @@ docker exec -it --workdir /diaryapp/test -e DEBUG= diary-test npm run test-entri
 docker exec -it -e DEBUG= userauth-test npm install supertest mocha chai
 docker exec -it -e DEBUG= userauth-test ./node_modules/.bin/mocha test.js
 
+docker exec -it userauth-test npm run setupuser
+docker exec -it diaryapp-test npm run test-docker-ui
+
 docker-compose stop

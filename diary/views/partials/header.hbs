@@ -1,7 +1,7 @@
 <header>
     <nav class="border fixed split-nav">
         <div class="nav-brand">
-            <h4><a href="/">Online Diary</a></h4>
+            <h4><a href="/" id="btnGoHome" >Online Diary</a></h4>
         </div>
         <div class="collapsible">
             <input id="collapsible2" type="checkbox" name="collapsible2">
@@ -14,12 +14,12 @@
             <div class="collapsible-body">
                 <ul class="inline">
                     {{#if user}}
-                    <li><a href="/entry/add">My Day</a></li>
+                    <li><a href="/entry/add" id="btnAddEntry">My Day</a></li>
                     <li><a href="#">{{ user.username }}</a></li>
-                    <li><a href="/user/logout">LogOut</a></li>
+                    <li><a href="/user/logout" id="btnLogout">LogOut</a></li>
                     {{else}}
-                    <li><a href="/user/login">LogIn</a></li>
-                    <li><a href="/user/register">Register</a></li>
+                    <li><a href="/user/login" id="btnLoginLocal">LogIn</a></li>
+                    <li><a href="/user/register" id="btnRegister">Register</a></li>
                     {{/if}}
                 </ul>
             </div>

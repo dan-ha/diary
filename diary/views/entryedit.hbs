@@ -1,4 +1,4 @@
-<form method='POST' action='/entry/save'>
+<form id="formAddEditEntry" method='POST' action='/entry/save'>
     {{#if docreate}}
     <input type='hidden' name='docreate' value="create">
     {{else}}
@@ -35,6 +35,6 @@
         </div>
     </div>
     <div class="row flex-right">
-        <button type='submit' class="sm-2 col btn-success">Save</button>
+        <button id="btnSave" type='submit' class="sm-2 col btn-success">Save</button>
     </div>
 </form>

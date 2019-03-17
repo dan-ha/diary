@@ -1,5 +1,5 @@
-<div class="row flex-center border border-primary padding-left-large padding-right-large">
-    <form method="POST" action="/user/login" class="lg-8 col">
+<div id="diaryLoginPage" class="row flex-center border border-primary padding-left-large padding-right-large">
+    <form id="diaryLoginForm" method="POST" action="/user/login" class="lg-8 col">
         <div class="form-group">
             <label for="username">User name: </label>
             <input class="input-block" type="text" name="username" id="username" placeholder="User Name">
@@ -10,7 +10,7 @@
         </div>
 
         <div>
-            <button class="btn-success" type="submit">Login</button>
+            <button id="formLoginBtn" class="btn-success" type="submit">Login</button>
         </div>
     </form>
 </div>
