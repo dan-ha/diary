@@ -4,9 +4,9 @@ import mongoose from 'mongoose';
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Diary');
 
 
-export async function saveEntry(userId, date, title, content) {
+export async function saveEntry(username, date, title, content) {
     const diaryEntry = new Entry({
-        userId,
+        username,
         date,
         title,
         content
@@ -14,17 +14,17 @@ export async function saveEntry(userId, date, title, content) {
     await diaryEntry.save();
 }
 
-export async function findAllEntries(userId) {
-    return await Entry.find({userId});
+export async function findAllEntries(username) {
+    return await Entry.find({ username });
 }
 
 // returns null in case it doesn't find an entry
-export async function findEntry(userId, date) {
-    return await Entry.findOne({ userId, date });
+export async function findEntry(username, date) {
+    return await Entry.findOne({ username, date });
 }
 
-export async function updateEntry(userId, date, title, content) {
-    var result = await Entry.updateOne({userId, date }, { title, content });
+export async function updateEntry(username, date, title, content) {
+    var result = await Entry.updateOne({ username, date }, { title, content });
     if (result.n) {
         return true;
     } else {
@@ -32,8 +32,8 @@ export async function updateEntry(userId, date, title, content) {
     }
 }
 
-export async function deleteEntry(userId, date) {
-    var result = await Entry.deleteOne({ date });
+export async function deleteEntry(username, date) {
+    var result = await Entry.deleteOne({ username, date });
     if (result.deletedCount) {
         return true;
     } else {

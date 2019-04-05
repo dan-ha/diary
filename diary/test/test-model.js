@@ -8,7 +8,7 @@ const model = require('../models/entries');
 
 describe('Model test', function () {
 
-    const userId1 = 100;
+    const username1 = 'test-user';
     const date1 = new Date(2019, 1, 1).valueOf();
     const title1 = 'Model test title1';
     const content1 = 'Model test content1';
@@ -20,13 +20,13 @@ describe('Model test', function () {
     beforeEach(async function () {
         try {
             // remove all diary entries
-            var entries = await model.findAllEntries(userId1);
+            var entries = await model.findAllEntries(username1);
             entries.forEach(async function(entry) {
-                await model.deleteEntry(entry.userId, entry.date);
+                await model.deleteEntry(entry.username, entry.date);
             })
             // insert 2 new test entries
-            await model.saveEntry(userId1, date1, title1, content1);
-            await model.saveEntry(userId1, date2, title2, content2);
+            await model.saveEntry(username1, date1, title1, content1);
+            await model.saveEntry(username1, date2, title2, content2);
         } catch (err) {
             console.error(err);
             throw err;
@@ -34,7 +34,7 @@ describe('Model test', function () {
     });
 
     describe('Save diary entry', function () {
-        const userId3 = 102;
+        const username = 'save-test-user';
         const date = new Date().setHours(0, 0, 0, 0).valueOf();
 
         it('should save new Entry', async function () {
@@ -43,11 +43,11 @@ describe('Model test', function () {
             const content = 'Test-mongoose should create new entry document';
 
             // Act
-            await model.saveEntry(userId3, date, title, content);
+            await model.saveEntry(username, date, title, content);
 
             // Assert
-            const newEntry = await model.findEntry(userId3, date);
-            assert.equal(newEntry.userId, userId3);
+            const newEntry = await model.findEntry(username, date);
+            assert.equal(newEntry.username, username);
             assert.equal(newEntry.date, date);
             assert.equal(newEntry.title, title);
             assert.equal(newEntry.content, content);
@@ -58,7 +58,7 @@ describe('Model test', function () {
             const errorMessage = 'should not get here';
             // Act
             try {
-                await model.saveEntry(date1, 'Test title', 'Test content');
+                await model.saveEntry(username1, date1, 'Test title', 'Test content');
                 throw new Error('should not get here');
             }
             // Assert
@@ -73,10 +73,10 @@ describe('Model test', function () {
             // Arrange
 
             // Act
-            var entry = await model.findEntry(userId1, date1);
+            var entry = await model.findEntry(username1, date1);
 
             // Assert
-            assert.equal(entry.userId, userId1);
+            assert.equal(entry.username, username1);
             assert.equal(entry.date, date1);
             assert.equal(entry.title, title1);
             assert.equal(entry.content, content1);
@@ -86,7 +86,7 @@ describe('Model test', function () {
             // Arrange
 
             // Act
-            var entry = await model.findEntry(1234);
+            var entry = await model.findEntry('non-existing', 123);
 
             // Assert
             assert.isNull(entry);
@@ -98,22 +98,22 @@ describe('Model test', function () {
             // Arrange
 
             // Act
-            var entries = await model.findAllEntries(userId1);
+            var entries = await model.findAllEntries(username1);
 
             // Assert
             assert.exists(entries);
             assert.isArray(entries);
             assert.lengthOf(entries, 2);
-            assert.equal(entries[0].userId, userId1);
+            assert.equal(entries[0].username, username1);
             assert.equal(entries[0].date, date1);
             assert.equal(entries[1].date, date2);
         });
 
         it('should return empty array', async function () {
             // Arrange
-            const userId = 999;
+            const username = 'non-existing';
             // Act
-            var entries = await model.findAllEntries(userId);
+            var entries = await model.findAllEntries(username);
 
             // Assert
             assert.exists(entries);
@@ -130,13 +130,13 @@ describe('Model test', function () {
             const newContent = 'Model test update new content1';
 
             // Act
-            const result = await model.updateEntry(userId1, date1, newTitle, newContent);
+            const result = await model.updateEntry(username1, date1, newTitle, newContent);
 
             // Assert
             assert.isTrue(result);
 
-            var updatedEntry = await model.findEntry(userId1, date1);
-            assert.equal(updatedEntry.userId, userId1);
+            var updatedEntry = await model.findEntry(username1, date1);
+            assert.equal(updatedEntry.username, username1);
             assert.equal(updatedEntry.date, date1);
             assert.equal(updatedEntry.title, newTitle);
             assert.equal(updatedEntry.content, newContent);
@@ -145,7 +145,7 @@ describe('Model test', function () {
         it('should return true for same object', async function () {
             // Arrange
             // Act
-            const result = await model.updateEntry(userId1, date2, title2, content2);
+            const result = await model.updateEntry(username1, date2, title2, content2);
 
             // Assert
             assert.isTrue(result);
@@ -154,7 +154,7 @@ describe('Model test', function () {
         it('should return false for non exisitng entry', async function () {
             // Arrange
             // Act
-            const result = await model.updateEntry(userId1, new Date().valueOf(), 'new title', 'new content');
+            const result = await model.updateEntry(username1, new Date().valueOf(), 'new title', 'new content');
 
             // Assert
             assert.isFalse(result);
@@ -165,12 +165,12 @@ describe('Model test', function () {
         it('should remove entry', async function () {
             // Arrange
             // Act
-            var response = await model.deleteEntry(userId1, date2);
+            var response = await model.deleteEntry(username1, date2);
 
             // Assert
             assert.isTrue(response);
 
-            var entries = await model.findAllEntries(userId1);
+            var entries = await model.findAllEntries(username1);
             assert.isArray(entries);
             assert.lengthOf(entries, 1);
             assert.equal(entries[0].date, date1);
@@ -180,12 +180,12 @@ describe('Model test', function () {
             // Arrange
             var date = new Date().valueOf();
             // Act
-            var response = await model.deleteEntry(userId1, date);
+            var response = await model.deleteEntry(username1, date);
 
             // Assert
             assert.isFalse(response);
 
-            var entries = await model.findAllEntries(userId1);
+            var entries = await model.findAllEntries(username1);
             assert.isArray(entries);
             assert.lengthOf(entries, 2);
         });
