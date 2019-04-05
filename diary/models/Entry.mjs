@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 var entrySchema = new mongoose.Schema({
-    date: {type: Number, index: {unique: true}},
+    userId: {type: Number},
+    date: {type: Number},
     title: {type: String},
     content: {type: String}
 });
