@@ -4,105 +4,186 @@
 // that is able to lead ES6 modules
 require = require("@std/esm")(module, { "esm": "js" });
 const assert = require('chai').assert;
-const model = require('../models/entries');
+const model = require('../models/entries-mongoose');
 
-describe("Model Test", function () {
+describe('Model test', function () {
+
+    const date1 = new Date(2019, 1, 1).valueOf();
+    const title1 = 'Model test title1';
+    const content1 = 'Model test content1';
+
+    const date2 = new Date(2019, 1, 2).valueOf();
+    const title2 = 'Model test title2';
+    const content2 = 'Model test content2';
 
     beforeEach(async function () {
         try {
-            const dates = await model.datelist();
-            for (let date of dates) {
-                await model.destroy(date);
-            }
-            await model.create("01/01/2019", "Title 1", "Content 1");
-            await model.create("02/01/2019", "Title 2", "Content 2");
-            await model.create("03/01/2019", "Title 3", "Content 3");
-        } catch (e) {
-            console.error(e);
-            throw e;
+            // remove all diary entries
+            var entries = await model.findAllEntries();
+            entries.forEach(async function(entry) {
+                await model.deleteEntry(entry.date);
+            })
+            // insert 2 new test entries
+            await model.saveEntry(date1, title1, content1);
+            await model.saveEntry(date2, title2, content2);
+        } catch (err) {
+            console.error(err);
+            throw err;
         }
     });
 
-    describe("check datelist", function () {
-        it("should have three entries", async function () {
-            const dates = await model.datelist();
-            assert.exists(dates);
-            assert.isArray(dates);
-            assert.lengthOf(dates, 3);
-        });
-        it("should have specified dates", async function () {
-            const dates = await model.datelist();
-            assert.exists(dates);
-            assert.isArray(dates);
-            assert.lengthOf(dates, 3);
-            for (let date of dates) {
-                assert.match(date, /0[1,2,3]\/01\/2019/, "correct date");
-            }
-        });
-        it("should have titles Title #", async function () {
-            const dates = await model.datelist();
-            assert.exists(dates);
-            assert.isArray(dates);
-            assert.lengthOf(dates, 3);
-            var entryPromises = dates.map(date => model.read(date));
-            const entries = await Promise.all(entryPromises);
-            for (let entry of entries) {
-                assert.match(entry.title, /Title [1,2,3]/, "correct title");
-            }
-        });
-    });
+    describe('Save diary entry', function () {
+        const date = new Date().setHours(0, 0, 0, 0).valueOf();
 
-    describe("read entry", function () {
-        it("should have proper entry", async function () {
-            const entry = await model.read("01/01/2019");
-            assert.exists(entry);
-            assert.deepEqual({ date: entry.date, title: entry.title, content: entry.content },
-                { date: "01/01/2019", title: "Title 1", content: "Content 1" });
+        it('should save new Entry', async function () {
+            // Arrange
+            const title = 'Test-mongoose create entry';
+            const content = 'Test-mongoose should create new entry document';
+
+            // Act
+            await model.saveEntry(date, title, content);
+
+            // Assert
+            const newEntry = await model.findEntry(date);
+            assert.equal(newEntry.date, date);
+            assert.equal(newEntry.title, title);
+            assert.equal(newEntry.content, content);
         });
-        it("Unknown entry should fail", async function () {
+
+        it('should fail to save duplicate entry', async function () {
+            // Arrange
+            const errorMessage = 'should not get here';
+            // Act
             try {
-                const entry = await model.read("unknown date");
-                throw new Error("should not get here");
-            } catch (err) {
-                // this is expected, so do not indicate error
-                assert.notEqual(err.message, "should not get here");
+                await model.saveEntry(date1, 'Test title', 'Test content');
+                throw new Error('should not get here');
             }
-        })
-    });
-
-    describe("update entry", function () {
-        it("after a successful model.update", async function () {
-            const newentry = await model.update("01/01/2019", "Title 1 changed", "Content 1 changed");
-            const entry = await model.read("01/01/2019");
-            assert.exists(entry);
-            assert.deepEqual({ date: entry.date, title: entry.title, content: entry.content }, {
-                date: "01/01/2019", title: "Title 1 changed", content: "Content 1 changed"
-            });
-        });
-    });
-
-    describe("destroy entry", function () {
-        it("should remove entry", async function () {
-            await model.destroy("01/01/2019");
-            const dates = await model.datelist();
-            assert.exists(dates);
-            assert.isArray(dates);
-            assert.lengthOf(dates, 2);
-            for (let date of dates) {
-                assert.match(date, /0[2,3]\/01\/2019/, "correct key");
-            }
-        });
-        if ("should fail to remove unknown entry", async function () {
-            try {
-                await model.destroy("unknown date");
-                throw new Error("should not get here");
-            } catch (err) {
-                assert.notEqual(err.message, "should not get here");
+            // Assert
+            catch (error) {
+                assert.notEqual(error.message, errorMessage);
             }
         });
     });
 
-    after(function () {
-        model.close();
+    describe('Find diary entry', function () {
+        it('should find existing entry', async function () {
+            // Arrange
+
+            // Act
+            var entry = await model.findEntry(date1);
+
+            // Assert
+            assert.equal(entry.date, date1);
+            assert.equal(entry.title, title1);
+            assert.equal(entry.content, content1);
+        });
+
+        it('should return null for non existing entry', async function () {
+            // Arrange
+
+            // Act
+            var entry = await model.findEntry(1234);
+
+            // Assert
+            assert.isNull(entry);
+        });
     });
+
+    describe('Find all entries', function () {
+        it('should find 2 entries', async function () {
+            // Arrange
+
+            // Act
+            var entries = await model.findAllEntries();
+
+            // Assert
+            assert.exists(entries);
+            assert.isArray(entries);
+            assert.lengthOf(entries, 2);
+            assert.equal(entries[0].date, date1);
+            assert.equal(entries[1].date, date2);
+        });
+
+        it('should return empty array', async function () {
+            // Arrange
+            await model.deleteEntry(date1);
+            await model.deleteEntry(date2);
+
+            // Act
+            var entries = await model.findAllEntries();
+
+            // Assert
+            assert.exists(entries);
+            assert.isArray(entries);
+            assert.lengthOf(entries, 0);
+        });
+    });
+
+
+    describe('Update an entry', function () {
+        it('should update existing entry', async function () {
+            // Arrange
+            const newTitle = 'Model test new title1';
+            const newContent = 'Model test update new content1';
+
+            // Act
+            const result = await model.updateEntry(date1, newTitle, newContent);
+
+            // Assert
+            assert.isTrue(result);
+
+            var updatedEntry = await model.findEntry(date1);
+            assert.equal(updatedEntry.title, newTitle);
+            assert.equal(updatedEntry.content, newContent);
+        });
+
+        it('should return true for same object', async function () {
+            // Arrange
+            // Act
+            const result = await model.updateEntry(date2, title2, content2);
+
+            // Assert
+            assert.isTrue(result);
+        });
+
+        it('should return false for non exisitng entry', async function () {
+            // Arrange
+            // Act
+            const result = await model.updateEntry(new Date().valueOf(), 'new title', 'new content');
+
+            // Assert
+            assert.isFalse(result);
+        });
+    });
+
+    describe('Delete an entry', function () {
+        it('should remove entry', async function () {
+            // Arrange
+            // Act
+            var response = await model.deleteEntry(date2);
+
+            // Assert
+            assert.isTrue(response);
+
+            var entries = await model.findAllEntries();
+            assert.isArray(entries);
+            assert.lengthOf(entries, 1);
+            assert.equal(entries[0].date, date1);
+        });
+
+        it('should return false for non existing entry', async function () {
+            // Arrange
+            var date = new Date().valueOf();
+            // Act
+            var response = await model.deleteEntry(date);
+
+            // Assert
+            assert.isFalse(response);
+
+            var entries = await model.findAllEntries();
+            assert.isArray(entries);
+            assert.lengthOf(entries, 2);
+        });
+    });
+
 });

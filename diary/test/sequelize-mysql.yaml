@@ -1,8 +1,0 @@
-dbname: diary-test 
-username: diary-test
-password: diary-test
-params: 
-    host: db-diary-test
-    port: 3306 
-    dialect: mysql 
-    logging: false 

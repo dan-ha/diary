@@ -20,7 +20,7 @@ router.get('/add', ensureAuthenticated, (req, res, next) => {
 router.post('/save', ensureAuthenticated,async (req, res, next) => {
     var diaryEntry;
     if (req.body.docreate === 'create') {
-        diaryEntry = await entries.create(req.body.date,
+        diaryEntry = await entries.saveEntry(req.body.date,
             req.body.title, req.body.content);
     } else {
         diaryEntry = await entries.update(req.body.date,
@@ -31,7 +31,7 @@ router.post('/save', ensureAuthenticated,async (req, res, next) => {
 
 // Read Diary Entry
 router.get('/view', ensureAuthenticated, async (req, res, next) => {
-    var diaryEntry = await entries.read(req.query.date);
+    var diaryEntry = await entries.findEntry(req.query.date);
     res.render('entryview', {
         title: diaryEntry ? diaryEntry.title : "",
         date: req.query.date,
@@ -42,7 +42,7 @@ router.get('/view', ensureAuthenticated, async (req, res, next) => {
 
 // Edit Diary Entry
 router.get('/edit', ensureAuthenticated, async (req, res, next) => {
-    var diaryEntry = await entries.read(req.query.date);
+    var diaryEntry = await entries.findEntry(req.query.date);
     res.render('entryedit', {
         title: diaryEntry ? ("Edit " + diaryEntry.title) : "Add a Note",
         docreate: false,
@@ -54,7 +54,7 @@ router.get('/edit', ensureAuthenticated, async (req, res, next) => {
 
 // Ask to delete diary entry
 router.get('/destroy', ensureAuthenticated, async (req, res, next) => {
-    var diaryEntry = await entries.read(req.query.date);
+    var diaryEntry = await entries.findEntry(req.query.date);
     res.render('entrydestroy', {
         title: diaryEntry ? diaryEntry.title : "",
         date: req.query.date,
@@ -65,6 +65,6 @@ router.get('/destroy', ensureAuthenticated, async (req, res, next) => {
 
 // Really destroy note (destroy)
 router.post('/destroy/confirm', ensureAuthenticated, async (req, res, next) => {
-    await entries.destroy(req.body.date);
+    await entries.deleteEntry(req.body.date);
     res.redirect('/');
 });

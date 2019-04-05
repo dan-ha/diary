@@ -10,7 +10,7 @@ function frameEvent(evtname, frame) {
 function ignoreURL(url) {
     if (url.match(/\/assets\//) === null
         && url.match(/\/fonts.gstatic.com/) === null
-        && url.match(/\/fonts.googleapis.com/ === null)) {
+        && url.match(/\/fonts.googleapis.com/ === nullg)) {
         return false;
     } else {
         return true;

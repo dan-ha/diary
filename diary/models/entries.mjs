@@ -1,35 +1,41 @@
-var EntriesModule;
+import Entry from "./Entry.mjs";
+import mongoose from 'mongoose';
 
-async function model() {
-    if (EntriesModule) {
-        return EntriesModule;
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Diary');
+
+
+export async function saveEntry(date, title, content) {
+    const diaryEntry = new Entry({
+        date,
+        title,
+        content
+    });
+    await diaryEntry.save();
+}
+
+export async function findAllEntries() {
+    return await Entry.find({});
+}
+
+// returns null in case it doesn't find an entry
+export async function findEntry(date) {
+    return await Entry.findOne({ date });
+}
+
+export async function updateEntry(date, title, content) {
+    var result = await Entry.updateOne({ date }, { title, content });
+    if (result.n) {
+        return true;
+    } else {
+        return false;
     }
-    EntriesModule = await import(`../models/entries-${process.env.ENTRIES_MODEL}`);
-    return EntriesModule;
 }
 
-export async function create(date, title, content) {
-    return (await model()).create(date, title, content);
-}
-
-export async function update(date, title, content) {
-    return (await model()).update(date, title, content)
-}
-
-export async function read(date) {
-    return (await model()).read(date);
-}
-
-export async function destroy(date) {
-    return (await model()).destroy(date);
-}
-export async function datelist() {
-    return (await model()).datelist();
-}
-
-export async function count() {
-    return (await model()).count();
-}
-export async function close() {
-    return (await model()).close();
+export async function deleteEntry(date) {
+    var result = await Entry.deleteOne({ date });
+    if (result.deletedCount) {
+        return true;
+    } else {
+        return false;
+    }
 }

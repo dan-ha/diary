@@ -1,7 +1,0 @@
-dbname: diary 
-username: diary 
-password: diary
-params: 
-    host: db-diary 
-    port: 3306 
-    dialect: mysql 
