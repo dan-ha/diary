@@ -1,9 +1,8 @@
-<div id="diaryHomePage" class="row flex-center child-borders">
-    <div id="diaryTitles">
-        {{#each diaryEntries}}
-        <div class="sm-8 col">
-            {{ date }}: <a id="{{date}}" href="entry/view?date={{ date }}">{{ title }}</a>
-        </div>
-        {{/each}}
+<div id="diaryHomePage" class="row site">
+    <div class="sm-12 md-3 col">
+        {{>sidebarhistory}}
+    </div>
+    <div class="sm-12 md-9 col">
+        {{>entry}}
     </div>
 </div>
