@@ -7,11 +7,7 @@ export const router = express.Router();
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, async (req, res, next) => {
-  let datelist = await entries.datelist();
-  let entryPromises = datelist.map(date => {
-    return entries.read(date);
-  })
-  let diaryEntries = await Promise.all(entryPromises);
+  let diaryEntries = await entries.findAllEntries(req.user.username);
   res.render('index', { 
     title: 'Online Diary',
     user: req.user ? req.user : undefined,

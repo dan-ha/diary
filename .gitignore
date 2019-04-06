@@ -73,3 +73,6 @@ diary-data/
 
 #express session file
 diary/sessions
+
+# my personal notes
+notes.txt

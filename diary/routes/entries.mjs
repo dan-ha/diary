@@ -20,10 +20,10 @@ router.get('/add', ensureAuthenticated, (req, res, next) => {
 router.post('/save', ensureAuthenticated,async (req, res, next) => {
     var diaryEntry;
     if (req.body.docreate === 'create') {
-        diaryEntry = await entries.saveEntry(req.body.date,
+        diaryEntry = await entries.saveEntry(req.user.username, req.body.date,
             req.body.title, req.body.content);
     } else {
-        diaryEntry = await entries.update(req.body.date,
+        diaryEntry = await entries.update(req.user.username, req.body.date,
             req.body.title, req.body.content);
     }
     res.redirect('/entry/view?date=' + req.body.date);
