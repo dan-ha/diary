@@ -6,3 +6,19 @@ body {
 a {
   color: #00B7FF;
 }
+
+.history-item{
+  border-bottom: 1px solid #e6e7e9;
+    color: #41403e;
+    display: inline-block;
+    font-weight: 600;
+    margin: 0 0 -1px;
+    padding: .75rem;
+    text-align: center;
+    background-image: none;
+    font-size: 20px;
+}
+
+.history-item:hover{
+  color: #919191;
+}
