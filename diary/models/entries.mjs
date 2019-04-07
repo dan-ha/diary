@@ -15,7 +15,7 @@ export async function saveEntry(username, date, title, content) {
 }
 
 export async function findAllEntries(username) {
-    return await Entry.find({ username });
+    return await Entry.find({ username }, {}, {sort:{date: -1}});
 }
 
 // returns null in case it doesn't find an entry
