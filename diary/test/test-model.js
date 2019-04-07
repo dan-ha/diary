@@ -20,10 +20,10 @@ describe('Model test', function () {
     beforeEach(async function () {
         try {
             // remove all diary entries
-            var entries = await model.findAllEntries(username1);
+            var entries = await model.findAllEntriesDates(username1);
             entries.forEach(async function(entry) {
-                await model.deleteEntry(entry.username, entry.date);
-            })
+                await model.deleteEntry(username1, entry.date);
+            });
             // insert 2 new test entries
             await model.saveEntry(username1, date1, title1, content1);
             await model.saveEntry(username1, date2, title2, content2);
@@ -34,7 +34,6 @@ describe('Model test', function () {
     });
 
     describe('Save diary entry', function () {
-        const username = 'save-test-user';
         const date = new Date().setHours(0, 0, 0, 0).valueOf();
 
         it('should save new Entry', async function () {
@@ -43,11 +42,11 @@ describe('Model test', function () {
             const content = 'Test-mongoose should create new entry document';
 
             // Act
-            await model.saveEntry(username, date, title, content);
+            await model.saveEntry(username1, date, title, content);
 
             // Assert
-            const newEntry = await model.findEntry(username, date);
-            assert.equal(newEntry.username, username);
+            const newEntry = await model.findEntry(username1, date);
+            assert.equal(newEntry.username, username1);
             assert.equal(newEntry.date, date);
             assert.equal(newEntry.title, title);
             assert.equal(newEntry.content, content);
@@ -93,27 +92,26 @@ describe('Model test', function () {
         });
     });
 
-    describe('Find all entries', function () {
+    describe('Find all entries dates', function () {
         it('should find 2 entries', async function () {
             // Arrange
 
             // Act
-            var entries = await model.findAllEntries(username1);
+            var entries = await model.findAllEntriesDates(username1);
 
             // Assert
             assert.exists(entries);
             assert.isArray(entries);
             assert.lengthOf(entries, 2);
-            assert.equal(entries[0].username, username1);
-            assert.equal(entries[0].date, date1);
-            assert.equal(entries[1].date, date2);
+            assert.equal(entries[0].date, date2);
+            assert.equal(entries[1].date, date1);
         });
 
         it('should return empty array', async function () {
             // Arrange
             const username = 'non-existing';
             // Act
-            var entries = await model.findAllEntries(username);
+            var entries = await model.findAllEntriesDates(username);
 
             // Assert
             assert.exists(entries);

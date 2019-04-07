@@ -18,6 +18,10 @@ export async function findAllEntries(username) {
     return await Entry.find({ username }, {}, {sort:{date: -1}});
 }
 
+export async function findAllEntriesDates(username) {
+    return await Entry.find({username}, ['date'], {sort:{date: -1}});
+}
+
 // returns null in case it doesn't find an entry
 export async function findEntry(username, date) {
     return await Entry.findOne({ username, date });
