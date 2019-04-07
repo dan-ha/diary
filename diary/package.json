@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
+    "nodemon": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 nodemon --experimental-modules ./bin/www.mjs",
     "start-memory": "DEBUG=diary:* ENTRIES_MODEL=memory USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
     "start-mongo": "DEBUG=diary:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=diary ENTRIES_MODEL=mongodb USER_SERVICE_URL=http://localhost:3333 node --experimental-modules ./bin/www.mjs",
     "start-sequelize": "SEQUELIZE_CONNECT=models/sequelize-sqlite.yaml ENTRIES_MODEL=sequelize node --experimental-modules ./bin/www.mjs",
@@ -32,5 +33,8 @@
     "session-file-store": "^1.2.0",
     "sqlite3": "^4.0.6",
     "superagent": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }

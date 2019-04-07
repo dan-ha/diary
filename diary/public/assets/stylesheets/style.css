@@ -22,3 +22,7 @@ a {
 .history-item:hover{
   color: #919191;
 }
+
+.history-item:active{
+  background-color: #00B7FF;
+}
