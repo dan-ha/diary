@@ -50,7 +50,8 @@ router.get('/login', redirectHomeWhenAuthenticated,  function (req, res, next) {
   try {
     res.render('login', {
       title: "Login to Diary",
-      user: req.user
+      user: req.user,
+      error: getErrorMessage(req.query.error)
     });
   } catch (e) {
     next(e);
@@ -60,7 +61,7 @@ router.get('/login', redirectHomeWhenAuthenticated,  function (req, res, next) {
 // Login (post)
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/', // SUCCESS: Go to home page
-  failureRedirect: 'login' // FAILURE: Go to /user/login
+  failureRedirect: 'login?error=1' // FAILURE: Go to /user/login?error=1
 })
 );
 
@@ -115,10 +116,8 @@ passport.use(new LocalStrategy(
     try {
       var check = await usersModel.userPasswordCheck(username, password);
       if(check.check) {
-        console.log('yes');
         done(null, { id: check.username, username: check.username});
       } else {
-        console.log('no');
         done(null, false, check.message);
       }
     } catch(e) {
@@ -143,3 +142,10 @@ passport.deserializeUser(async (username, done) => {
     done(e);
   }
 });
+
+function getErrorMessage(errorCode) {
+  switch (errorCode){
+    case '1' : return 'Incorrect username or password.';
+    default: return undefined;
+  }
+}
