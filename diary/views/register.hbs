@@ -1,29 +1,31 @@
-<div class="row flex-center border border-primary padding-left-large padding-right-large">
-    <form method="POST" action="/user/register" class="lg-8 col">
-        <div class="form-group">
-            <label for="username">User name: </label>
-            <input class="input-block" type="text" name="username" id="username" placeholder="User Name">
-        </div>
-        <div class="form-group">
-            <label for="password">Password: </label>
-            <input class="input-block" type="password" name="password" id="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="passwordRepeat">Repaet Password: </label>
-            <input class="input-block" type="password" name="passwordRepeat" id="passwordRepeat"
-                placeholder="Repeat Password">
-        </div>
-        <div class="form-group">
-            <label for="name">Full Name: </label>
-            <input class="input-block" type="text" name="name" id="name" placeholder="Full Name">
-        </div>
-        <div class="form-group">
-            <label for="email">Email address: </label>
-            <input class="input-block" type="text" name="email" id="email" placeholder="Email">
-        </div>
+<div class="row flex-center form-middle">
+    <div class="sm-5 col border border-primary padding-left-large padding-right-large">
+        <form method="POST" action="/user/register">
+            <div class="form-group">
+                <label for="username">User name: </label>
+                <input class="input-block" type="text" name="username" id="username" placeholder="User Name">
+            </div>
+            <div class="form-group">
+                <label for="password">Password: </label>
+                <input class="input-block" type="password" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="passwordRepeat">Repaet Password: </label>
+                <input class="input-block" type="password" name="passwordRepeat" id="passwordRepeat"
+                    placeholder="Repeat Password">
+            </div>
+            <div class="form-group">
+                <label for="name">Full Name: </label>
+                <input class="input-block" type="text" name="name" id="name" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address: </label>
+                <input class="input-block" type="text" name="email" id="email" placeholder="Email">
+            </div>
 
-        <div>
-            <button class="btn-success" type="submit">Register</button>
-        </div>
-    </form>
+            <div>
+                <button class="btn-success" type="submit">Register</button>
+            </div>
+        </form>
+    </div>
 </div>
