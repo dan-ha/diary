@@ -35,8 +35,17 @@ server.post('/create-user', async (req, res, next) => {
         res.send(result);
         next(false);
     } catch (err) {
-        res.send(500, err);
-        next(false);
+        if (isUniqueViolated(err)) {
+            res.send(409, err);
+            next(false);
+        } else 
+        if(notEmptyViolated(err)) {
+            res.send(400, err);
+            next(false);
+        } else {
+            res.send(500, err);
+            next(false);
+        }
     }
 });
 
@@ -138,11 +147,11 @@ server.get('/list', async (req, res, next) => {
     }
 })
 
-server.listen(process.env.PORT, 
-    process.env.REST_LISTEN ? process.env.REST_LISTEN : "localhost",  
+server.listen(process.env.PORT,
+    process.env.REST_LISTEN ? process.env.REST_LISTEN : "localhost",
     () => {
-    log(server.name + ' listening at ' + server.url);
-});
+        log(server.name + ' listening at ' + server.url);
+    });
 
 //Mimic API Key authentication
 var apiKeys = [{
@@ -169,4 +178,17 @@ function check(req, res, next) {
         res.send(500, new Error('No Authorization Key'));
         next(false);
     }
+}
+
+function isUniqueViolated(err) {
+     return (err.name == 'SequelizeUniqueConstraintError');
+}
+
+function notEmptyViolated(err) {
+    if(err.name == 'SequelizeValidationError') {
+        return err.errors.some(error => {
+            return (error.validatorName == 'notEmpty');
+        });
+    }
+    return false;
 }

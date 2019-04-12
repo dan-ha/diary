@@ -35,7 +35,7 @@ export function ensureAuthenticated(req, res, next) {
 // TO avoid logged in user login again/register
 function redirectHomeWhenAuthenticated(req, res, next) {
   try {
-    if(req.user) {
+    if (req.user) {
       res.redirect('/');
     } else {
       next();
@@ -46,12 +46,12 @@ function redirectHomeWhenAuthenticated(req, res, next) {
 }
 
 // Login (get)
-router.get('/login', redirectHomeWhenAuthenticated,  function (req, res, next) {
+router.get('/login', redirectHomeWhenAuthenticated, function (req, res, next) {
   try {
     res.render('login', {
       title: "Login to Diary",
       user: req.user,
-      error: getErrorMessage(req.query.error)
+      message: getLoginMessage(req.query.message)
     });
   } catch (e) {
     next(e);
@@ -61,7 +61,7 @@ router.get('/login', redirectHomeWhenAuthenticated,  function (req, res, next) {
 // Login (post)
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/', // SUCCESS: Go to home page
-  failureRedirect: 'login?error=1' // FAILURE: Go to /user/login?error=1
+  failureRedirect: 'login?message=1' // FAILURE: Go to /user/login?error=1
 })
 );
 
@@ -72,41 +72,44 @@ router.get('/register', (req, res, next) => {
       title: "register",
       user: req.user
     })
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 });
 
 // Register new User (post)
-router.post('/register', redirectHomeWhenAuthenticated, (req, res, next) => {
+router.post('/register', redirectHomeWhenAuthenticated, async (req, res, next) => {
   try {
-    // if username exists return error
-    var newAccount = usersModel.create(
-        req.body.username,
-        req.body.password,
-        "local",
-        req.body.name,  // family name
-        req.body.name,  // given name
-        req.body.name,  // middle name
-        req.body.email,
-        undefined
+    var newAccount = await usersModel.create(
+      req.body.username,
+      req.body.password,
+      "local",
+      req.body.name,  // family name
+      req.body.name,  // given name
+      req.body.name,  // middle name
+      req.body.email,
+      undefined
     );
-    if(newAccount) {
-      res.redirect("login");
+    if (newAccount) {
+      res.redirect("login?message=0");
     }
-    // return error that it failed to create account
-  } catch(e) {
-    next(e);
+  } catch (error) {
+    res.render('register', {
+      title: 'register',
+      user: req.user,
+      newUser: req.body,
+      error: getRegisterErrorMessage(error)
+    });
   }
 });
 
-router.get('/logout', function(req, res, next) {
-  try{
+router.get('/logout', function (req, res, next) {
+  try {
     req.session.destroy();
     req.logout();
     res.clearCookie(sessionCookieName);
     res.redirect('/');
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 });
@@ -115,21 +118,21 @@ passport.use(new LocalStrategy(
   async (username, password, done) => {
     try {
       var check = await usersModel.userPasswordCheck(username, password);
-      if(check.check) {
-        done(null, { id: check.username, username: check.username});
+      if (check.check) {
+        done(null, { id: check.username, username: check.username });
       } else {
         done(null, false, check.message);
       }
-    } catch(e) {
+    } catch (e) {
       done(e);
     }
   }
 ));
 
-passport.serializeUser(function(user, done){
+passport.serializeUser(function (user, done) {
   try {
     done(null, user.username);
-  } catch(e) {
+  } catch (e) {
     done(e);
   }
 });
@@ -138,14 +141,23 @@ passport.deserializeUser(async (username, done) => {
   try {
     var user = await usersModel.find(username);
     done(null, user);
-  } catch(e) {
+  } catch (e) {
     done(e);
   }
 });
 
-function getErrorMessage(errorCode) {
-  switch (errorCode){
-    case '1' : return 'Incorrect username or password.';
+function getLoginMessage(messageCode) {
+  switch (messageCode) {
+    case '0': return { message: 'Successfully registered. Please login.', class: 'alert-success' };
+    case '1': return { message: 'Incorrect username or password.', class: 'alert-danger' };
     default: return undefined;
+  }
+}
+
+function getRegisterErrorMessage(err) {
+  switch (err.status) {
+    case 400: return 'Please fill all fields with valid values.';
+    case 409: return 'Username already exists, choose different one.';
+    default: return 'Server error, try again later.';
   }
 }

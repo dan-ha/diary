@@ -52,7 +52,7 @@ export async function userPasswordCheck(username, password) {
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .auth('them', 'D4ED43C0-8BD6-4FE2-B358-7C0E230D11EF');
-        console.log(res.body);
+    console.log(res.body);
 
     return res.body;
 }
@@ -75,7 +75,7 @@ export async function findOrCreate(profile) {
     return res.body;
 }
 
-export async function listUsers(){
+export async function listUsers() {
     var res = await request
         .get(reqURL('/list'))
         .set('Content-Type', 'application/json')

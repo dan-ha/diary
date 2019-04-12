@@ -29,8 +29,21 @@ async function connectDB() {
     // The Portable Contacts "id" field maps to the "username" field 
     if (!SQUser) {
         SQUser = sequlz.define('User', {
-            username: { type: Sequelize.STRING, unique: true },
-            password: Sequelize.STRING,
+            username: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: true,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            password: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
             provider: Sequelize.STRING,
             familyName: Sequelize.STRING,
             givenName: Sequelize.STRING,
@@ -58,7 +71,7 @@ export async function update(username, password, provider, familyName, givenName
 
 
 export async function find(username) {
-    console.log('find  '+ username);
+    console.log('find  ' + username);
     const SQUser = await connectDB();
     const user = await SQUser.find({ where: { username: username } });
     const res = user ? sanitizedUser(user) : undefined;
