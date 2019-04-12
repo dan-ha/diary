@@ -1,16 +1,18 @@
-<div id="diaryLoginPage" class="row flex-center border border-primary padding-left-large padding-right-large">
-    <form id="diaryLoginForm" method="POST" action="/user/login" class="lg-8 col">
-        <div class="form-group">
-            <label for="username">User name: </label>
-            <input class="input-block" type="text" name="username" id="username" placeholder="User Name">
-        </div>
-        <div class="form-group">
-            <label for="password">Password: </label>
-            <input class="input-block" type="password" name="password" id="password" placeholder="Password">
-        </div>
+<div id="diaryLoginPage" class="row flex-center">
+    <div class="sm-5 col border border-primary padding-left-large padding-right-large">
+        <form id="diaryLoginForm" method="POST" action="/user/login">
+            <div class="form-group">
+                <label for="username">User name: </label>
+                <input class="input-block" type="text" name="username" id="username" placeholder="User Name">
+            </div>
+            <div class="form-group">
+                <label for="password">Password: </label>
+                <input class="input-block" type="password" name="password" id="password" placeholder="Password">
+            </div>
 
-        <div>
-            <button id="formLoginBtn" class="btn-success" type="submit">Login</button>
-        </div>
-    </form>
+            <div>
+                <button id="formLoginBtn" class="btn-success" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
 </div>

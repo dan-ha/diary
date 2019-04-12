@@ -26,3 +26,7 @@ a {
 .history-item:active{
   background-color: #00B7FF;
 }
+
+#diaryLoginPage {
+  padding: 50px;
+}
