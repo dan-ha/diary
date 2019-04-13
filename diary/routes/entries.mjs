@@ -10,23 +10,35 @@ export const router = express.Router();
 // View Diary Entry
 router.get('/:entry', ensureAuthenticated, async (req, res, next) => {
     // sidebar data
+    let todayy = new Date().setHours(0,0,0,0).valueOf();
     let diaryEntries = await entries.findAllEntries(req.user.username);
-    const dates = diaryEntries.map((entry) => {
-        const formattedDate = moment(entry.date).format("Do MMM YY");
-        return {
-            date: entry.date,
-            formattedDate: formattedDate
-        };
-    });
+    const dates = diaryEntries.reduce((result, entry) => {
+        if(entry.date != todayy) {
+            const formattedDate = moment(entry.date).format("Do MMM YY");
+            result.push({
+                date: entry.date,
+                formattedDate: formattedDate
+            }); 
+        }
+        return result;
+    }, []);
 
     // entry data
     var formattedDate;
     var docreate = true;
-    if (req.params.entry == 'today' || req.params.entry == 'new') {
+    var diaryEntry = undefined;
+    if (req.params.entry == 'today') {
+        var today = new Date().setHours(0, 0, 0, 0).valueOf();
+        diaryEntry = await entries.findEntry(req.user.username, today);
+        if (diaryEntry) {
+            docreate = false;
+        }
+        formattedDate = moment(today).format('Do MMM YY');
+    } else if (req.params.entry == 'new') {
         var today = new Date().setHours(0, 0, 0, 0).valueOf();
         formattedDate = moment(today).format('Do MMM YY');
     } else {
-        var diaryEntry = await entries.findEntry(req.user.username, req.params.entry);
+        diaryEntry = await entries.findEntry(req.user.username, req.params.entry);
         if (diaryEntry) {
             formattedDate = moment(diaryEntry.date).format('Do MMM YY');
             docreate = false;
