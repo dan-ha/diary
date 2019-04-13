@@ -6,12 +6,12 @@
         <input type='hidden' name='docreate' value="update">
         {{/if}}
         <div class="row">
-            <!-- Error message -->
-            {{#if error}}
+            <!-- message -->
+            {{#if message}}
             <div class="col sm-12">
                 <input class="alert-state" id="alert-5" type="checkbox">
-                <div class="alert alert-danger dismissible">
-                    {{error}}
+                <div class="alert {{message.class}} dismissible">
+                    {{message.message}}
                     <label class="btn-close" for="alert-5">X</label>
                 </div>
             </div>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="row flex-right">
-            <button class="sm-2 col btn-warning">Delete</button>
+            {{>deletemodal}}
             <button id="btnSave" type='submit' class="sm-2 col btn-success">Save</button>
         </div>
     </form>
