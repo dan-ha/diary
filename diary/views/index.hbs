@@ -6,3 +6,17 @@
         {{>entry}}
     </div>
 </div>
+
+<script>
+    // Set up moment formatter for jQuery-ui date picker
+    $.datepicker.parseDate = function (format, value) {
+        return moment(value, format).toDate();
+    };
+    $.datepicker.formatDate = function (format, value) {
+        return moment(value).format(format);
+    };
+
+    $(function () {
+        $("#date").datepicker({ dateFormat: "Do MMM YY" });
+    });
+</script>

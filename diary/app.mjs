@@ -69,6 +69,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets/vendor/papercss', express.static(
   path.join(__dirname, 'node_modules', 'papercss', 'dist')));
+app.use('/assets/vendor/moment', express.static(
+  path.join(__dirname, 'node_modules', 'moment', 'min')));
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);

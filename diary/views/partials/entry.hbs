@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label for="date">Date</label>
                     {{#if docreate }}
-                    <input type="text" name="date" id="date" class="input-block" value="{{date}}">
+                    <input type="text" name="date" id="date" class="input-block" value="{{date}}" readonly>
                     {{else}}
                     <input type="text" name="date" id="date" class="input-block" disabled
                         value='{{#if entry }}{{date}}{{/if}}'>
