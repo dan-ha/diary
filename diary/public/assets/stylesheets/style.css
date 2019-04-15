@@ -1,6 +1,7 @@
 body {
   padding-top: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('/assets/images/geometry.png');
 }
 
 a {
