@@ -1,14 +1,14 @@
-<div class="paper">
+<div class="paper" style="padding-bottom:0px">
     <form id="formAddEditEntry" method='POST' action='/save'>
         {{#if entryData.docreate}}
         <input type='hidden' name='docreate' value="create">
         {{else}}
         <input type='hidden' name='docreate' value="update">
         {{/if}}
-        <div class="row">
+        <div class="row small-spacing">
             <!-- message -->
             {{#if message}}
-            <div class="col sm-12">
+            <div class="col sm-12 small-spacing">
                 <input class="alert-state" id="alert-5" type="checkbox">
                 <div class="alert {{message.class}} dismissible">
                     {{message.message}}
@@ -16,7 +16,7 @@
                 </div>
             </div>
             {{/if}}
-            <div class="col sm-4">
+            <div class="col sm-4 small-spacing">
                 <div class="form-group">
                     <label for="formattedDate">Date</label>
                     {{#if entryData.docreate }}
@@ -29,7 +29,7 @@
                     <input hidden type="text" name="date" value='{{entryData.date}}'>
                 </div>
             </div>
-            <div class="col sm-8">
+            <div class="col sm-8 small-spacing">
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" name="title" id="title" class="input-block" placeholder="Title"
@@ -37,8 +37,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col sm-12">
+        <div class="row small-spacing">
+            <div class="col sm-12 small-spacing">
                 <div class="form-group">
                     <label for="content">Content</label>
                     <textarea class="input-block" rows="10" name='content' id="content" autocomplete="off"
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="row flex-right">
+        <div class="row flex-right small-spacing">
             {{>deletemodal}}
             <button id="btnSave" type='submit' class="sm-2 col btn-success">Save</button>
         </div>
