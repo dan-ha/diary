@@ -24,8 +24,10 @@ a {
   color: #919191;
 }
 
-.history-item:active{
-  background-color: #00B7FF;
+.highlight{
+  background-color: #d0dbc2;
+  border-color: #86a361;
+  border-width: 2px;
 }
 
 .form-middle {

@@ -1,7 +1,0 @@
-<form method='POST' action='/entry/destroy/confirm'>
-    <input type='hidden' name='date' value='{{#if entry}}{{date}}{{/if}}'>
-    <p>Delete {{entry.title}}?</p>
-    <br />
-    <input type='submit' value='DELETE' />
-    <a href="/entry/view?date={{#if entry}}{{date}}{{/if}}">Cancel</a>
-</form>

@@ -7,8 +7,8 @@
     <div class="modal-body">
         <label class="btn-close" for="modal-1">X</label>
         <h4 class="modal-title">Delete diary entry</h4>
-        <p class="modal-text">Are you sure you want to delete entry - {{date}}?</p>
+        <p class="modal-text">Are you sure you want to delete entry - {{entryData.formattedDate}}?</p>
         <label class="paper-btn" style="background:#f5f0c6" for="modal-1">Close</label>
-        <a href="/entry/destroy/{{entry.date}}" class="paper-btn" style="background:#f0cbc9">Delete</a>
+        <a href="/destroy/{{entryData.date}}" class="paper-btn" style="background:#f0cbc9">Delete</a>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <div id="diaryHomePage" class="row site">
     <div class="sm-12 md-3 col">
-        {{>sidebarhistory}}
+        {{>historySidebar}}
     </div>
     <div class="sm-12 md-9 col">
         {{>entry}}
@@ -17,6 +17,6 @@
     };
 
     $(function () {
-        $("#date").datepicker({ dateFormat: "Do MMM YY" });
+        $("#formattedDate").datepicker({ dateFormat: "Do MMM YY" });
     });
 </script>

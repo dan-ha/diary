@@ -10,7 +10,6 @@ const debug = DBG('diary:debug');
 const error = DBG('diary:error');
 
 import { router as indexRouter} from './routes/index';
-import { router as entryRouter} from './routes/entries';
 import { router as userRouter, initPassport } from './routes/users';
 
 import session from 'express-session';
@@ -74,7 +73,6 @@ app.use('/assets/vendor/moment', express.static(
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/entry', entryRouter);
 
 
 

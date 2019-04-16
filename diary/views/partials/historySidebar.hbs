@@ -1,0 +1,10 @@
+<div class="paper">
+    <h3 class="sidebar-title" style="text-align:center">History</h3>
+    <div class="row">
+        {{#each historyData}}
+        <div class="collapsible" style="width:100%">
+            <a href="/{{date}}" class="history-item {{class}}">{{formattedDate}}</a>
+        </div>
+        {{/each}}
+    </div>
+</div>
