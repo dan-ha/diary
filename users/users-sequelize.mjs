@@ -13,11 +13,14 @@ async function connectDB() {
     if (SQUser) {
         return SQUser.sync();
     }
-    const yamltext = await fs.readFile(process.env.SEQUELIZE_CONNECT, 'utf8');
-    const params = await jsyaml.safeLoad(yamltext, 'utf8');
-
     if (!sequlz) {
-        sequlz = new Sequelize(params.dbname, params.username, params.password, params.params);
+        if(process.env.CLEARDB_DATABASE_URL){
+            sequlz = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+        } else {
+            const yamltext = await fs.readFile(process.env.SEQUELIZE_CONNECT, 'utf8');
+            const params = await jsyaml.safeLoad(yamltext, 'utf8');
+            sequlz = new Sequelize(params.dbname, params.username, params.password, params.params);
+        }
     }
 
     // These fields largely come from the Passport / Portable Contacts schema.

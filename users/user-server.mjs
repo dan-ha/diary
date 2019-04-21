@@ -44,6 +44,7 @@ server.post('/create-user', async (req, res, next) => {
             next(false);
         } else {
             res.send(500, err);
+            console.log(err);
             next(false);
         }
     }
@@ -147,7 +148,8 @@ server.get('/list', async (req, res, next) => {
     }
 })
 
-server.listen(process.env.PORT,
+server.listen(
+    process.env.PORT_PROD ? process.env.PORT_PROD : process.env.PORT_LOCAL,
     process.env.REST_LISTEN ? process.env.REST_LISTEN : "localhost",
     () => {
         log(server.name + ' listening at ' + server.url);

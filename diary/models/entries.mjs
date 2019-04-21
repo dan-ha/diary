@@ -1,8 +1,7 @@
 import Entry from "./Entry.mjs";
 import mongoose from 'mongoose';
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Diary');
-
+mongoose.connect(process.env.MONGODB_URI || process.env.LOCAL_MONGODB_URI || 'mongodb://localhost:27017/Diary');
 
 export async function saveEntry(username, date, title, content) {
     const diaryEntry = new Entry({

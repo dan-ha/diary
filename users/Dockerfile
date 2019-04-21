@@ -1,7 +1,8 @@
 FROM node:10
 
 ENV DEBUG="users:*" 
-ENV PORT="3333" 
+ENV PORT_LOCAL="3333" 
+ENV PORT_PROD=$PORT
 ENV SEQUELIZE_CONNECT="sequelize-docker-mysql.yaml" 
 ENV REST_LISTEN="0.0.0.0" 
 

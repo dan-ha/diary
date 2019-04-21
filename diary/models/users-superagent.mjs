@@ -7,7 +7,7 @@ const debug = DBG('diary:users-superagent');
 const error = DBG('diary:error-superagent');
 
 function reqURL(path) {
-    const requrl = new URL(process.env.USER_SERVICE_URL);
+    const requrl = new URL(process.env.USER_SERVICE_URL || process.env.LOCAL_USER_SERVICE_URL);
     requrl.pathname = path;
     return requrl.toString();
 }

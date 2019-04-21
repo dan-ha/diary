@@ -12,7 +12,7 @@ services:
     networks:
       - authnet
     volumes:
-      - db-userauth-data:/var/lib/mysql
+      - ../authnet/userauth-data:/var/lib/mysql
       - ../authnet/my.cnf:/etc/my.cnf
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
@@ -32,23 +32,14 @@ services:
     restart: always
 
   db-diary:
-    image: "mysql/mysql-server:5.7"
+    image: "mongo:3.6-jessie"
     container_name: db-diary
-    command: [ "mysqld", "--character-set-server=utf8mb4", 
-              "--collation-server=utf8mb4_unicode_ci",
-              "--bind-address=0.0.0.0" ]
     expose:
-      - "3306"
+      - "27017"
     networks:
       - frontnet
     volumes:
-      - db-diary-data:/var/lib/mysql
-      - ../frontnet/my.cnf:/etc/my.cnf
-    environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "true"
-      MYSQL_USER: diary
-      MYSQL_PASSWORD: diary
-      MYSQL_DATABASE: diary
+      - ../frontnet/diary-data:/data/db
     restart: always
 
   diary:
@@ -67,7 +58,3 @@ networks:
     driver: bridge
   authnet:
     driver: bridge
-
-volumes: 
-  db-userauth-data: 
-  db-diary-data:
