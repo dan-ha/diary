@@ -4,3 +4,4 @@ password:
 params:
     dialect: sqlite
     storage: data/users-sequelize.sqlite3
+    logging: false

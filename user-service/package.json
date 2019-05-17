@@ -1,0 +1,35 @@
+{
+  "name": "user-auth-server",
+  "version": "1.0.0",
+  "description": "user auth microservice",
+  "main": "src/server.mjs",
+  "scripts": {
+    "start": "DEBUG=users:* NODE_ENV=dev node --experimental-modules --es-module-specifier-resolution=node src/server",
+    "test": "npm run clean & NODE_ENV=test mocha test/*.spec.js --exit",
+    "clean": "rimraf ./data/users-sequelize.sqlite3",
+    "sqlite3": "sqlite3 ./data/users-sequelize-test.sqlite3"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "dotenv": "^8.0.0",
+    "fs-extra": "^7.0.1",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.11",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "restify": "^8.3.2",
+    "restify-errors": "^8.0.0",
+    "rimraf": "^2.6.3",
+    "sequelize": "^4.43.0",
+    "sqlite3": "^4.0.8",
+    "swagger-ui-restify": "^3.0.8"
+  },
+  "devDependencies": {
+    "@std/esm": "^0.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.1.4"
+  }
+}
