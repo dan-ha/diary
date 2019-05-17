@@ -1,8 +1,11 @@
+os: osx
 language: node_js
 node_js:
   - '12'
 sudo: required
-script:
+before_install:
   - cd user-service
   - npm install
+  - mkdir data
+script:
   - npm run test
