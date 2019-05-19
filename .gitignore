@@ -71,10 +71,5 @@ diary-data/
 #express session file
 diary/sessions
 
-# dotenv environment variables file
-.env.dev
-.env.prod
-.env.test
-
 # my personal notes
 notes.txt
