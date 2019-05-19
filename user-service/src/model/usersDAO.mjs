@@ -8,9 +8,14 @@ import { User, initUser } from './user';
 const BCRYPT_SALT = 10;
 
 export function connectDB() {
-    const yamlText = fs.readFileSync(process.env.SEQUELIZE_CONNECT, 'utf-8');
-    const params = jsyaml.safeLoad(yamlText, 'utf8');
-    const sequelize = new Sequelize(params.dbname, params.username, params.password, params.params);
+    var sequelize;
+    if (process.env.NODE_ENV == 'production') {
+        sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+    } else {
+        const yamlText = fs.readFileSync(process.env.SEQUELIZE_CONNECT, 'utf-8');
+        const params = jsyaml.safeLoad(yamlText, 'utf8');
+        sequelize = new Sequelize(params.dbname, params.username, params.password, params.params);
+    }
     initUser(sequelize);
     sequelize.sync();
 }

@@ -54,9 +54,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # next.js build output
 .next
 
@@ -73,6 +70,11 @@ diary-data/
 
 #express session file
 diary/sessions
+
+# dotenv environment variables file
+.env.dev
+.env.prod
+.env.test
 
 # my personal notes
 notes.txt

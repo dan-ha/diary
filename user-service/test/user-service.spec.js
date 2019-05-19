@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 const server = require('../src/server');
 
-const ADDRESS = process.env.ADDRESS;
+const ADDRESS = process.env.ADDRESS || 'localhost';
 const PORT = process.env.PORT;
 const AUTH_USERNAME = process.env.AUTH_USERNAME;
 const AUTH_PASSWORD = process.env.AUTH_PASSWORD;
