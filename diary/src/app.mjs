@@ -11,6 +11,9 @@ import { router as userRouter, initPassport } from './routes/users';
 import { connectDb } from './utils/dbConnect';
 import { loadEnvVariables } from './utils/envVariables';
 
+// Workaround for lack of __dirname in ES6 modules
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 // Environment variables
 loadEnvVariables();
 

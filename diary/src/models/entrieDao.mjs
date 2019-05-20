@@ -1,4 +1,4 @@
-import Entry from "./Entry.mjs";
+import Entry from "./entry.mjs";
 
 export async function saveEntry(username, date, title, content) {
     const diaryEntry = new Entry({
