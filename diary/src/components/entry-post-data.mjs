@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { saveEntry, updateEntry } from '../models/entries';
+import { saveEntry, updateEntry } from '../models/entrieDao';
 
 const dateFormat = 'Do MMM YY';
 

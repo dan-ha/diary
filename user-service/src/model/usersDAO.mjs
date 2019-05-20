@@ -18,9 +18,6 @@ export function connectDB() {
     }
     initUser(sequelize);
     sequelize.sync();
-
-    console.log('aaaaaaaaaaa');
-    console.log(process.env.AUTH_USERNAME);
 }
 
 export async function create(username, password, name, email) {

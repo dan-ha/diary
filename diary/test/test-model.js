@@ -4,7 +4,9 @@
 // that is able to lead ES6 modules
 require = require("@std/esm")(module, { "esm": "js" });
 const assert = require('chai').assert;
-const model = require('../models/entries');
+const model = require('../src/models/entrieDao');
+const loadEnvVariables = require('../src/utils/envVariables').loadEnvVariables;
+const connectDb = require('../src/utils/dbConnect').connectDb;
 
 describe('Model test', function () {
 
@@ -17,13 +19,18 @@ describe('Model test', function () {
     const title2 = 'Model test title2';
     const content2 = 'Model test content2';
 
+    before(function () {
+        loadEnvVariables()
+        connectDb();
+    });
+
     beforeEach(async function () {
         try {
             // remove all diary entries
             var entries = await model.findAllEntriesDates(username1);
-            entries.forEach(async function(entry) {
-                await model.deleteEntry(username1, entry.date);
-            });
+            await Promise.all(entries.map(async (entry) => {
+                await model.deleteEntry(username1, entry.date)
+            }));
             // insert 2 new test entries
             await model.saveEntry(username1, date1, title1, content1);
             await model.saveEntry(username1, date2, title2, content2);
