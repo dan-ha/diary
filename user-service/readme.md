@@ -1,4 +1,10 @@
-### User Authentication Microservice
+## User Authentication Microservice
 
-Documentation and discovery
-hhtp://localhost:3000/api-docs
+```
+npm install
+npm run test
+npm run dev
+```
+
+### Documentation and discovery  
+hhtp://localhost:3333/api-docs

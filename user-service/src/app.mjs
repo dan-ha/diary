@@ -60,7 +60,7 @@ class App {
                     return next();
                 }
             } catch (err) {
-                //console.log(err);
+                console.log(err);
                 return next(new errors.InternalServerError("Internal Server Error"));
             }
         });

@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-import app from '../app.mjs';
+import app from '../src/app.mjs';
 import DBG from 'debug';
 const debug = DBG('diary:server-debug');
 const error = DBG('diary:server-error');

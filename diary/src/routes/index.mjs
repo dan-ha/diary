@@ -4,7 +4,7 @@ import { getHistorySidebarData } from '../components/history-sidebar';
 import { getSelectedEntryData, convertMessageCode } from '../components/entry-view-data';
 import { saveNewEntry } from '../components/entry-post-data';
 import { ensureAuthenticated } from './users';
-import { deleteEntry} from '../models/entries';
+import { deleteEntry} from '../models/entrieDao';
 
 export const router = express.Router();
 const dateFormat = 'Do MMM YY';
@@ -40,6 +40,7 @@ router.post('/save', ensureAuthenticated, async (req, res, next) => {
         const date = moment(req.body.formattedDate, dateFormat).valueOf();
         res.redirect(`/${date}?message=3`);
     } catch (err) {
+        console.log(err);
         // Mongodb E1100 - duplicate key error
         let errorCode;
         if (err.code == 1100) {
