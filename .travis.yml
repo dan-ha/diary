@@ -18,7 +18,7 @@ deploy:
     app: aqueous-reaches-89350
   - provider: script
     script: cd $TRAVIS_BUILD_DIR/diary
-   - provider: heroku
+  - provider: heroku
     api_key:
       secure: emLYMuniHw6PAQoMYJ68je+PNgnMJ+HgaX80jEBSXEcrWrLbnNhNhLZ+a2zhDewpIGaJggfI4tVkmbdzfVvcuO0LteWOE7t1mDa6QY/Ef3XTxsdTmRQN7gxmqssDVtICob2rvsFdiyD0bnXmBLdGpw6BGGfzv5ErQo6mNBeT0iduGx5x+a5M3/SSyYEg4zl/QqoAYrWP7JPO482nAoFEkRG0l01OXGo8eHqSrrbpZer0FtRNde7c8s0a9PR90iyn5xXCLABighe84vZsJe3Fdiz4zqifnrgiIQmjVQfmiiFe9WMTGW6eg1ZNB/NHlU4VXljHIvhbYv0RiEmhtQUZ512aScaMcO0Yj8CdZPpd4OKGYvbv3Yj/fDrrJJuByZoF2LtkxK9BoTXCIaS3CHNnZep6KuYoNSdzUjmsKAXFyRbdjNnBN9v4HNJ1PUxVeBd6g/HrWPkY2O50724TLjLq3Od5ZRM1lGy/dixVRzs33cT6m9Afkuv06UG82NzOXBjtPH5PdSO/n+6qMaS5kzp4tZ3RjmAHOx9TvRse3DqBSs815WG/mXQbKuZUWj0Ge98Y2LtsI3b7olYmOOez2oSQH47e4E2GcrWRa06BToldoqHJnuCw3w1fFfvah0iq506P8r5E5kCndJv/VxdwSJPaJRo/ZKGwnmwloufU9yw5Hw8=
     app: nameless-journey-27702
